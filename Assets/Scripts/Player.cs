@@ -15,4 +15,9 @@ public class Player : MonoBehaviour
     {
         
     }
+
+
+    Move(){
+        
+    }
 }
