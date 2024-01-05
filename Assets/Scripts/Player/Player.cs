@@ -133,16 +133,19 @@ public class Player : MonoBehaviour
 
     void WallSlide()
     {
-        anim.SetBool("inWall", isWallSliding);
-        if (isWalled() && !isGrounded() && horizontal != 0)
+        if (!isJumping)
         {
-            isWallSliding = true;
-            rig.velocity = new Vector2(rig.velocity.x, Mathf.Clamp(rig.velocity.y, wallSlidingSpeed, float.MinValue));
-           
-        }
-        else
-        {
-            isWallSliding = false;
+            anim.SetBool("inWall", isWallSliding);
+            if (isWalled() && !isGrounded() && horizontal != 0)
+            {
+                isWallSliding = true;
+                rig.velocity = new Vector2(rig.velocity.x, Mathf.Clamp(rig.velocity.y, wallSlidingSpeed, float.MinValue));
+            
+            }
+            else
+            {
+                isWallSliding = false;
+            }
         }
     }
 
