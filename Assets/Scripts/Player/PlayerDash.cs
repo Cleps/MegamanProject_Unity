@@ -18,6 +18,8 @@ public class PlayerDash : MonoBehaviour
     bool hasFunctionBeenCalled = false;
     bool airdash;
 
+    bool pressDash;
+
 
     void Start()
     {
@@ -33,6 +35,15 @@ public class PlayerDash : MonoBehaviour
 
     void Update()
     {
+        print(pressDash);
+        if (Input.GetMouseButton(1) || Input.GetKey("joystick button 7"))
+        {
+            pressDash = true;
+        }
+        else{
+            pressDash = false;
+        }
+
         if (timeDash <= 0)
         {
             if (!hasFunctionBeenCalled){
@@ -47,7 +58,7 @@ public class PlayerDash : MonoBehaviour
             hasFunctionBeenCalled = false;
         }
 
-        if (Input.GetMouseButton(1) && playerScript.isGrounded()) // air dash?
+        if (pressDash && playerScript.isGrounded()) // air dash?
         {
             timeDash -= Time.deltaTime;
             if(canDash && !airdash){
@@ -56,14 +67,14 @@ public class PlayerDash : MonoBehaviour
 
         }
 
-        if (Input.GetMouseButton(1))
+        if (pressDash)
         {
             if(canDash && !airdash)
                 GetComponent<GhostTrailEffect>().ActivateGhostTrail();
         }
 
 
-        else if(Input.GetMouseButtonUp(1))
+        else if(!pressDash)
         {
             rbPlayer.gravityScale = originalGravity;
             canDash = true;
