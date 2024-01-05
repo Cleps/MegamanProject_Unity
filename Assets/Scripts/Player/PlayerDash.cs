@@ -10,6 +10,8 @@ public class PlayerDash : MonoBehaviour
     public float speedDash;
     public float timeDash;
 
+    public string controllerButtonName = "joystick button 5";
+
     float currentTimeDash;
     float originalGravity;
     Player playerScript;
@@ -35,8 +37,7 @@ public class PlayerDash : MonoBehaviour
 
     void Update()
     {
-        print(pressDash);
-        if (Input.GetMouseButton(1) || Input.GetKey("joystick button 7"))
+        if (Input.GetMouseButton(1) || Input.GetKey("joystick button 5") || Input.GetKey(controllerButtonName))
         {
             pressDash = true;
         }

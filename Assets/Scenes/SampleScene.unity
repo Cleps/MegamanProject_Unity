@@ -779,6 +779,7 @@ MonoBehaviour:
   isDashing: 0
   speedDash: 7
   timeDash: 0.8
+  controllerButtonName: joystick button 5
 --- !u!114 &251420020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -791,9 +792,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 321e8453ef158a745b94ae590ccd57f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ghostTrailPrefab: {fileID: 251420011}
-  ghostTrailInterval: 1
-  ghostTrailDuration: 1
+  spawnInterval: 0.1
+  lifeTime: 0.3
+  effectTime: 0.3
 --- !u!1 &253124138
 GameObject:
   m_ObjectHideFlags: 0

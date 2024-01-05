@@ -69,7 +69,7 @@ public class Player : MonoBehaviour
     {
 
         horizontal = Input.GetAxisRaw("Horizontal") * (moveSpeed);
-        
+
         if (!isWallJumping && !dashScript.isDashing)
             rig.velocity = new Vector2(horizontal, rig.velocity.y);
 
