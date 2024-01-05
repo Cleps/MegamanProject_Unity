@@ -56,15 +56,18 @@ public class Player : MonoBehaviour
         anim.SetBool("jump", !isGrounded());
     }
 
+
     void FixedUpdate()
     {
         Move();
     }
 
+
     void Move()
     {
 
         horizontal = Input.GetAxisRaw("Horizontal") * (moveSpeed);
+        
         if (!isWallJumping)
             rig.velocity = new Vector2(horizontal, rig.velocity.y);
 
@@ -102,7 +105,7 @@ public class Player : MonoBehaviour
             }
             else if (isJumping)
             {
-                isJumping = false; // Impede pulos consecutivos enquanto no ar
+                isJumping = false;
             }
         }
 
@@ -110,9 +113,8 @@ public class Player : MonoBehaviour
         {
             if (jumpTime < maxJumpTime)
             {
-                // Se o botão estiver sendo mantido pressionado, pule alto; caso contrário, pule baixo
                 float currentJumpSpeed = Input.GetButton("Jump") ? jumpSpeed : jumpSpeed / 2f;
-                rig.velocity = new Vector2(rig.velocity.x, currentJumpSpeed + (currentJumpSpeed * jump_height / 100)); // porcentagem
+                rig.velocity = new Vector2(rig.velocity.x, currentJumpSpeed + (currentJumpSpeed * jump_height / 100));
                 jumpTime += Time.deltaTime;
             }
             else
@@ -122,9 +124,10 @@ public class Player : MonoBehaviour
         }
         else if (Input.GetButtonUp("Jump"))
         {
-            isJumping = false; // Garante que o pulo pare quando o botão é solto
+            isJumping = false;
         }
     }
+
 
     void WallSlide()
     {
@@ -175,6 +178,7 @@ public class Player : MonoBehaviour
         }
     }
 
+
     private void StopWallJumping()
     {
         isWallJumping = false;
@@ -185,6 +189,7 @@ public class Player : MonoBehaviour
     {
         return Physics2D.CircleCast(wallCheck.position, 0.1f, Vector2.down, 0.1f, wallLayer);
     }
+
 
     bool isGrounded()
     {   
