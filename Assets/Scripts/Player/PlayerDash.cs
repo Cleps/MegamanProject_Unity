@@ -99,8 +99,7 @@ public class PlayerDash : MonoBehaviour
 
     private void Dash()
     {
-        //GetComponent<GhostTrailEffect>().ActivateGhostTrail();
-        
+
         isDashing = true;
         //rbPlayer.gravityScale = 0f;
         anim.SetBool("dash", true);
