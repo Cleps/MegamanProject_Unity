@@ -37,12 +37,14 @@ public class Player : MonoBehaviour
     Rigidbody2D rig;
     float ultimaDirecao = 1;
     Animator anim;
+    PlayerDash dashScript;
     
 
     void Start()
     {
         rig = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        dashScript = GetComponent<PlayerDash>();
     }
 
     void Update()
@@ -68,7 +70,7 @@ public class Player : MonoBehaviour
 
         horizontal = Input.GetAxisRaw("Horizontal") * (moveSpeed);
         
-        if (!isWallJumping)
+        if (!isWallJumping && !dashScript.isDashing)
             rig.velocity = new Vector2(horizontal, rig.velocity.y);
 
         
@@ -191,7 +193,7 @@ public class Player : MonoBehaviour
     }
 
 
-    bool isGrounded()
+    public bool isGrounded()
     {   
         return Physics2D.CircleCast(groundCheck.position, 0.1f, Vector2.down, 0.1f, groundLayer);
     }
