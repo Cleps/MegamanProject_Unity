@@ -736,7 +736,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 251420011}
   m_Enabled: 0
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 28999855de8cf714a91befee7ea8522e, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -777,7 +777,7 @@ MonoBehaviour:
   canDash: 1
   isDashing: 0
   speedDash: 7
-  timeDash: 1
+  timeDash: 0.8
 --- !u!1 &253124138
 GameObject:
   m_ObjectHideFlags: 0

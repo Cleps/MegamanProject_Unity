@@ -9,15 +9,16 @@ public class PlayerDash : MonoBehaviour
     public bool isDashing;
     public float speedDash;
     public float timeDash;
-    private float currentTimeDash;
-    private float originalGravity;
-    private Player playerScript;
-    private Rigidbody2D rbPlayer;
-    private Animator anim;
-    private bool hasFunctionBeenCalled = false;
-    private bool airdash;
 
-    // Start is called before the first frame update
+    float currentTimeDash;
+    float originalGravity;
+    Player playerScript;
+    Rigidbody2D rbPlayer;
+    Animator anim;
+    bool hasFunctionBeenCalled = false;
+    bool airdash;
+
+
     void Start()
     {
         rbPlayer =GetComponent<Rigidbody2D>();
@@ -31,8 +32,7 @@ public class PlayerDash : MonoBehaviour
     }
 
     void Update()
-    {//Input.GetKeyDown(KeyCode.LeftShift)
-
+    {
         if (timeDash <= 0)
         {
             if (!hasFunctionBeenCalled){
@@ -47,7 +47,7 @@ public class PlayerDash : MonoBehaviour
             hasFunctionBeenCalled = false;
         }
 
-        if (Input.GetMouseButton(1)) //&& playerScript.isGrounded)
+        if (Input.GetMouseButton(1) && playerScript.isGrounded()) // air dash?
         {
             timeDash -= Time.deltaTime;
             if(canDash && !airdash){
@@ -65,7 +65,7 @@ public class PlayerDash : MonoBehaviour
             timeDash = currentTimeDash;
 
             if (!hasFunctionBeenCalled){
-                zeraY();
+                //zeraY();
                 hasFunctionBeenCalled = true;
             }
         }
