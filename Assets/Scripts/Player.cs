@@ -9,19 +9,33 @@ public class Player : MonoBehaviour
     public float jumpSpeed;
     public float maxJumpTime;
     public float jump_height;
+    public Vector2 wallJumpingPower = new Vector2(8f, 16f);
+    public float wallJumpingDuration = 0.4f;
+    public float wallJumpingTime = 0.2f;
+    public float wallSlidingSpeed = 20;
 
     bool isJumping = false;
     float jumpTime = 0f;
     bool canMove;
+    bool isWallSliding;
+
+    bool isFacingRight = true;
+    bool isWallJumping;
+    float wallJumpingDirection;
+    float wallJumpingCounter;
+    
+    
 
     [Header("Others")]
     [SerializeField] Transform groundCheck;
     [SerializeField] LayerMask groundLayer;
+    [SerializeField] Transform wallCheck;
+    [SerializeField] LayerMask wallLayer;
     [SerializeField] Camera cam;
 
     float horizontal;
     Rigidbody2D rig;
-    float ultimaDirecao;
+    float ultimaDirecao = 1;
     Animator anim;
     
 
@@ -33,19 +47,26 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        Move();
-
         Jump();
+
+        WallSlide();
+
+        WallJump();
 
         anim.SetBool("jump", !isGrounded());
     }
 
+    void FixedUpdate()
+    {
+        Move();
+    }
 
     void Move()
     {
 
         horizontal = Input.GetAxisRaw("Horizontal") * (moveSpeed);
-        rig.velocity = new Vector2(horizontal, rig.velocity.y);
+        if (!isWallJumping)
+            rig.velocity = new Vector2(horizontal, rig.velocity.y);
 
         
         if (horizontal < 0)
@@ -58,7 +79,9 @@ public class Player : MonoBehaviour
 
             ultimaDirecao = 1f;
         }
-        GetComponent<SpriteRenderer>().flipX = (ultimaDirecao == -1f);
+
+        //GetComponent<SpriteRenderer>().flipX = (ultimaDirecao == -1f); // modifique aqui
+        transform.localScale = new Vector3(ultimaDirecao, 1f, 1f);
 
         if (horizontal == 0){
             anim.SetBool("idle", true);
@@ -103,8 +126,65 @@ public class Player : MonoBehaviour
         }
     }
 
+    void WallSlide()
+    {
+        anim.SetBool("inWall", isWallSliding);
+        if (isWalled() && !isGrounded() && horizontal != 0)
+        {
+            isWallSliding = true;
+            rig.velocity = new Vector2(rig.velocity.x, Mathf.Clamp(rig.velocity.y, wallSlidingSpeed, float.MinValue));
+           
+        }
+        else
+        {
+            isWallSliding = false;
+        }
+    }
 
 
+    private void WallJump()
+    {
+        if (isWallSliding)
+        {
+            isWallJumping = false;
+            wallJumpingDirection = -transform.localScale.x;
+            wallJumpingCounter = wallJumpingTime;
+
+            CancelInvoke(nameof(StopWallJumping));
+        }
+        else
+        {
+            wallJumpingCounter -= Time.deltaTime;
+        }
+
+        if (Input.GetButtonDown("Jump") && wallJumpingCounter > 0f)
+        {
+            isWallJumping = true;
+            rig.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
+            wallJumpingCounter = 0f;
+
+            if (transform.localScale.x != wallJumpingDirection)
+            {
+                isFacingRight = !isFacingRight;
+                Vector3 localScale = transform.localScale;
+                localScale.x *= -1f;
+                transform.localScale = localScale;
+            }
+
+            Invoke(nameof(StopWallJumping), wallJumpingDuration);
+        }
+    }
+
+    private void StopWallJumping()
+    {
+        isWallJumping = false;
+    }
+
+
+    bool isWalled()
+    {
+        return Physics2D.CircleCast(wallCheck.position, 0.1f, Vector2.down, 0.1f, wallLayer);
+    }
 
     bool isGrounded()
     {   
