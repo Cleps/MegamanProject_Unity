@@ -528,6 +528,7 @@ GameObject:
   - component: {fileID: 251420013}
   - component: {fileID: 251420012}
   - component: {fileID: 251420019}
+  - component: {fileID: 251420020}
   - component: {fileID: 251420017}
   m_Layer: 0
   m_Name: Player
@@ -778,6 +779,21 @@ MonoBehaviour:
   isDashing: 0
   speedDash: 7
   timeDash: 0.8
+--- !u!114 &251420020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 251420011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 321e8453ef158a745b94ae590ccd57f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghostTrailPrefab: {fileID: 251420011}
+  ghostTrailInterval: 1
+  ghostTrailDuration: 1
 --- !u!1 &253124138
 GameObject:
   m_ObjectHideFlags: 0

@@ -56,6 +56,13 @@ public class PlayerDash : MonoBehaviour
 
         }
 
+        if (Input.GetMouseButton(1))
+        {
+            if(canDash && !airdash)
+                GetComponent<GhostTrailEffect>().ActivateGhostTrail();
+        }
+
+
         else if(Input.GetMouseButtonUp(1))
         {
             rbPlayer.gravityScale = originalGravity;
@@ -80,6 +87,7 @@ public class PlayerDash : MonoBehaviour
 
     private void Dash()
     {
+        //GetComponent<GhostTrailEffect>().ActivateGhostTrail();
         
         isDashing = true;
         //rbPlayer.gravityScale = 0f;
